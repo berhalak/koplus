@@ -1,0 +1,9 @@
+{
+    "files": [
+        "src/koplus.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es3"
+    }
+}

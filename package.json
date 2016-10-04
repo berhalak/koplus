@@ -1,0 +1,19 @@
+{
+  "name": "koplus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/knockout": "^3.4.35",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-minify": "0.0.14",
+    "gulp-typescript": "^3.0.2",
+    "typescript": "^2.0.3"
+  }
+}
