@@ -1,7 +1,9 @@
 /// <reference path="../node_modules/@types/knockout/index.d.ts" />
+"use strict";
 
 namespace koplus {
-    export interface optionsType {
+
+	export interface optionsType {
         arrays?: Array<string>;
         get?: (name: string, isArray: boolean, getHandler: (name: string, isArray: boolean) => void) => void;
     }
@@ -9,7 +11,7 @@ namespace koplus {
     function get(name: string, isArray: boolean) {
         // if this is not object notation (+ObjectName.SubObjectName.ObservableName)
         if (name.indexOf(".") < 0) {
-            if (this[name] == null) {
+            if (this[name] === null) {
                 if (isArray === true) {
                     this[name] = ko.observableArray();
                 } else {
@@ -18,16 +20,16 @@ namespace koplus {
             }
             return this[name];
         } else { // else for object notation
-            var parts = name.split(".");
-            var pointer = this;
-            for (var i = 0; i < parts.length - 1; i++) {
-                var part = parts[i];
+            const parts = name.split(".");
+            let pointer = this;
+            for (let i = 0; i < parts.length - 1; i++) {
+                const part = parts[i];
                 if (pointer[part] === undefined) {
                     pointer[part] = {};
                 }
                 pointer = pointer[part];
             }
-            var lastPart = parts[parts.length - 1];
+            const lastPart = parts[parts.length - 1];
             pointer[lastPart] = isArray ? ko.observableArray() : ko.observable();
             return pointer[lastPart];
         }
@@ -35,19 +37,19 @@ namespace koplus {
 
     export var _get: (name: string, isArray: boolean) => void = get;
 
-    function preprocess(val:string, name:string, addBindingCallback:KnockoutAllBindingsAccessor) {
+    function preprocess(val: string, name: string, addBindingCallback: KnockoutAllBindingsAccessor) {
         // if no + sign returon val
         if (val.indexOf("+") < 0)
             return val;
-        let isArray = 'false';
+        let isArray = "false";
         if (arrayObservables.hasOwnProperty(name))
-            isArray = 'true';
-        let regex = new RegExp("(\\+\\w[\\w\\.]*)", 'g');
+            isArray = "true";
+        let regex = new RegExp("(\\+\\w[\\w\\.]*)", "g");
         let match:any = null;
         let newVal:string = val;
         while (match = regex.exec(val)) {
             let exp = "koplus._get.call($data,'" + match[0].substr(1) + "', " + isArray + ")";
-            newVal = newVal.replace(match[0], exp)
+            newVal = newVal.replace(match[0], exp);
         }
         return newVal;
     }
@@ -55,6 +57,9 @@ namespace koplus {
     let arrayObservables:any = {};
 
     export function init(options?: optionsType) {
+		if (typeof(ko) === undefined){
+			throw "Make sure to first include knockout.js";
+		}
         arrayObservables = {};
         if (options !== undefined && options.arrays !== undefined) {
             for (let i:number = 0; i < options.arrays.length; i++) {
@@ -65,17 +70,17 @@ namespace koplus {
         if (options !== undefined && options.get !== undefined) {
             _get = function (n, a) {
                 options.get(n, a, get);
-            }
+            };
         }
         else {
             _get = get;
         }
 
-        arrayObservables['options'] = true;
-        arrayObservables['items'] = true;
+        arrayObservables["options"] = true;
+        arrayObservables["items"] = true;
 
-        for (var a in ko.bindingHandlers) {
+        for (const a in ko.bindingHandlers) {
             ko.bindingHandlers[a].preprocess = preprocess;
-        }        
+		}        
     }
 }

@@ -1,10 +1,11 @@
 /// <reference path="../node_modules/@types/knockout/index.d.ts" />
+"use strict";
 var koplus;
 (function (koplus) {
     function get(name, isArray) {
         // if this is not object notation (+ObjectName.SubObjectName.ObservableName)
         if (name.indexOf(".") < 0) {
-            if (this[name] == null) {
+            if (this[name] === null) {
                 if (isArray === true) {
                     this[name] = ko.observableArray();
                 }
@@ -34,10 +35,10 @@ var koplus;
         // if no + sign returon val
         if (val.indexOf("+") < 0)
             return val;
-        var isArray = 'false';
+        var isArray = "false";
         if (arrayObservables.hasOwnProperty(name))
-            isArray = 'true';
-        var regex = new RegExp("(\\+\\w[\\w\\.]*)", 'g');
+            isArray = "true";
+        var regex = new RegExp("(\\+\\w[\\w\\.]*)", "g");
         var match = null;
         var newVal = val;
         while (match = regex.exec(val)) {
@@ -48,6 +49,9 @@ var koplus;
     }
     var arrayObservables = {};
     function init(options) {
+        if (typeof (ko) === undefined) {
+            throw "Make sure to first include knockout.js";
+        }
         arrayObservables = {};
         if (options !== undefined && options.arrays !== undefined) {
             for (var i = 0; i < options.arrays.length; i++) {
@@ -62,8 +66,8 @@ var koplus;
         else {
             koplus._get = get;
         }
-        arrayObservables['options'] = true;
-        arrayObservables['items'] = true;
+        arrayObservables["options"] = true;
+        arrayObservables["items"] = true;
         for (var a in ko.bindingHandlers) {
             ko.bindingHandlers[a].preprocess = preprocess;
         }
