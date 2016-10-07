@@ -5,7 +5,7 @@ var koplus;
     function get(name, isArray) {
         // if this is not object notation (+ObjectName.SubObjectName.ObservableName)
         if (name.indexOf(".") < 0) {
-            if (this[name] === null) {
+            if (this[name] === undefined) {
                 if (isArray === true) {
                     this[name] = ko.observableArray();
                 }
