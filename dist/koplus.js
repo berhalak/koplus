@@ -32,8 +32,8 @@ var koplus;
     }
     koplus._get = get;
     function preprocess(val, name, addBindingCallback) {
-        // if no + sign returon val
-        if (val.indexOf("+") < 0)
+        // if no + sign return val
+        if (val === undefined || val.indexOf("+") < 0)
             return val;
         var isArray = "false";
         if (arrayObservables.hasOwnProperty(name))

@@ -15,15 +15,15 @@ Let's start with some examples. Here we have basic knockout binding for text:
 </script>
 ```
 
-Here's an equivalent example using koplus library, but with no explicit observable creation
+Here's an equivalent example using koplus library, but with no explicit observable creation.
 
 ```html
 <span data-bind="text: +CompanyName"><span>
 <script>
     koplus.init();
-    var vm = {};
-    ko.applyBindings(vm);
-    console.log(ko.isObservable(vm.CompanyName)); // prints true
+    var viewModel = {};
+    ko.applyBindings(viewModel);
+    console.log(ko.isObservable(viewModel.CompanyName)); // prints true
 </script>
 ```
 

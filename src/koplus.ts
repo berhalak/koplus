@@ -38,8 +38,8 @@ namespace koplus {
     export var _get: (name: string, isArray: boolean) => void = get;
 
     function preprocess(val: string, name: string, addBindingCallback: KnockoutAllBindingsAccessor) {
-        // if no + sign returon val
-        if (val.indexOf("+") < 0)
+        // if no + sign return val
+        if (val === undefined || val.indexOf("+") < 0)
             return val;
         let isArray = "false";
         if (arrayObservables.hasOwnProperty(name))
